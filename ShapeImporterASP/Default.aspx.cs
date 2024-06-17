@@ -70,10 +70,7 @@ namespace ShapeImporterASP
             {
                 foreach(string sFile in sFiles)
                 {
-                    if (!sFile.Contains("debug.txt"))
-                    {
-                        File.Delete(sFile);
-                    }
+                    File.Delete(sFile);
                 }
             }
         }
