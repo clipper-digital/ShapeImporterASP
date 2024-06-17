@@ -328,10 +328,19 @@ namespace ShapeImporterASP
                 }
             }
 
-            cmd = new SqlCommand("SPUpdateDesotoCarrierRoutes_Step1", conn);
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandTimeout = 3600;
-//            cmd.ExecuteNonQuery();
+            string sRunSproc = System.Configuration.ConfigurationManager.AppSettings["RunSproc"];
+            bool bRunSproc = false;
+            if (!string.IsNullOrEmpty(sRunSproc))
+                if (!bool.TryParse(sRunSproc, out bRunSproc))
+                    bRunSproc = false;
+            if (bRunSproc)
+            {
+                SLog("Executing SPUpdateDEsotoCarrierRoutes_Step1 stored procedure", LogEventLevel.Information);
+                cmd = new SqlCommand("SPUpdateDesotoCarrierRoutes_Step1", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandTimeout = 3600;
+                cmd.ExecuteNonQuery();
+            }
 
             conn.Close();
             Response.StatusCode = 200;
