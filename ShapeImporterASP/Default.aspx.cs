@@ -129,6 +129,8 @@ namespace ShapeImporterASP
             }
             catch (Exception e)
             {
+                fs.Close();
+                fs.Dispose();
                 SLog("Exception connecting to " + sURL + ":" + iPort.ToString() + ": " + e.ToString(), LogEventLevel.Error);
                 Response.StatusCode = 408;
                 return false;
@@ -140,6 +142,10 @@ namespace ShapeImporterASP
             }
             catch (Exception e)
             {
+                sftp.Disconnect();
+                sftp.Dispose();
+                fs.Close();
+                fs.Dispose();
                 SLog("Exception downloading file: " + e.ToString(), LogEventLevel.Error);
                 Response.StatusCode = 409;
                 return false;
